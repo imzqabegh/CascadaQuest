@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CascadaQuest — Panduan & Direktori Air Terjun Eropa</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="script.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Leaflet CSS & JS for Interactive Route Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-cyan selection:text-white">
+
+  <!-- ========================================================= -->
+  <!-- 1. STICKY TOP NAVIGATION BAR                              -->
+  <!-- ========================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-emerald via-brand-cyan to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+            <i data-lucide="waves" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight text-white flex items-center gap-1">
+              Cascada<span class="text-brand-cyan">Quest</span>
+            </span>
+            <span class="block text-[10px] font-medium tracking-widest text-slate-300 uppercase -mt-1">Europe Waterfalls</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#explore" class="text-sm font-medium text-slate-200 hover:text-brand-cyan transition-colors">Cari Rute</a>
+          <a href="#europe-map" class="text-sm font-medium text-slate-200 hover:text-brand-cyan transition-colors flex items-center gap-1.5">
+            <span class="inline-block w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+            <span>Peta Interaktif Eropa</span>
+          </a>
+          <a href="#featured" class="text-sm font-medium text-slate-200 hover:text-brand-cyan transition-colors">Air Terjun Pilihan</a>
+          <a href="#categories" class="text-sm font-medium text-slate-200 hover:text-brand-cyan transition-colors">Kategori Rute</a>
+          <a href="#features" class="text-sm font-medium text-slate-200 hover:text-brand-cyan transition-colors">Keunggulan</a>
+          <a href="#community" class="text-sm font-medium text-slate-200 hover:text-brand-cyan transition-colors">Komunitas</a>
+        </nav>
+
+        <!-- Right Action Button -->
+        <div class="hidden sm:flex items-center gap-3">
+          <button onclick="openRouteModal('staubbach')" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-brand-cyan to-brand-emerald hover:opacity-95 shadow-md shadow-cyan-500/25 transition-all hover:-translate-y-0.5">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+            <span>Lihat Peta & Rute</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-200 hover:text-white hover:bg-white/10" aria-label="Toggle navigation">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-dark/95 border-b border-white/10 px-6 py-6 space-y-4">
+      <a href="#explore" class="block text-base font-medium text-slate-200 hover:text-brand-cyan">Cari Rute</a>
+      <a href="#europe-map" class="block text-base font-medium text-slate-200 hover:text-brand-cyan">Peta Interaktif Eropa</a>
+      <a href="#featured" class="block text-base font-medium text-slate-200 hover:text-brand-cyan">Air Terjun Pilihan</a>
+      <a href="#categories" class="block text-base font-medium text-slate-200 hover:text-brand-cyan">Kategori Rute</a>
+      <a href="#features" class="block text-base font-medium text-slate-200 hover:text-brand-cyan">Keunggulan</a>
+      <a href="#community" class="block text-base font-medium text-slate-200 hover:text-brand-cyan">Komunitas</a>
+      <div class="pt-4 border-t border-white/10">
+        <button onclick="openRouteModal('staubbach')" class="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-brand-cyan to-brand-emerald">
+          <i data-lucide="compass" class="w-4 h-4"></i>
+          <span>Lihat Peta & Rute</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================= -->
+    <!-- 2. HERO SECTION + FLOATING INTERACTIVE SEARCH BAR         -->
+    <!-- ========================================================= -->
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-brand-dark">
+      <!-- Background: Real Lauterbrunnen Valley & Staubbach Falls, Switzerland -->
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/1_lauterbrunnen_valley_wengen_2022.jpg/1920px-1_lauterbrunnen_valley_wengen_2022.jpg" 
+          alt="Lembah megah Lauterbrunnen dan air terjun Staubbach di Pegunungan Alpen Swiss" 
+          class="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 ease-out"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-navy/60 to-brand-navy/70 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-black/40"></div>
+      </div>
+
+      <div class="relative z-10 max-w-5xl mx-auto text-center mt-8">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-semibold mb-6 shadow-inner animate-pulse">
+          <i data-lucide="compass" class="w-4 h-4 text-brand-cyan"></i>
+          <span>DIREKTORI & PETA AIR TERJUN RESMI EROPA</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15] mb-6">
+          Dengarkan Gemuruhnya.<br>
+          <span class="bg-gradient-to-r from-brand-cyan via-teal-300 to-brand-emerald bg-clip-text text-transparent">
+            Taklukkan Jalurnya.
+          </span><br>
+          Temukan Keajaiban Tersembunyi Eropa.
+        </h1>
+
+        <p class="max-w-3xl mx-auto text-lg sm:text-xl text-slate-200/90 leading-relaxed font-normal mb-10">
+          Direktori terlengkap 1.200+ air terjun di benua Eropa—dilengkapi peta topografi interaktif yang bisa dilihat langsung, grafik profil ketinggian elevasi, dan berkas rute GPX resmi yang siap diunduh ke perangkat GPS Anda.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <a href="#featured" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-base text-brand-dark bg-gradient-to-r from-brand-cyan to-brand-emerald hover:brightness-110 shadow-xl shadow-cyan-500/25 transition-all hover:scale-105">
+            <span>Mulai Ekspedisi Sekarang</span>
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </a>
+          <button onclick="openRouteModal('staubbach')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full font-semibold text-base text-white bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 transition-all hover:scale-105">
+            <i data-lucide="map" class="w-5 h-5 text-brand-cyan"></i>
+            <span>Lihat Peta Rute Langsung</span>
+          </button>
+          <button onclick="openVideoModal('swiss', 'Lauterbrunnen Valley & Alpine Glacier (Swiss)')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full font-semibold text-base text-slate-200 bg-slate-900/60 hover:bg-slate-900/80 backdrop-blur-md border border-white/15 transition-all hover:scale-105">
+            <i data-lucide="play-circle" class="w-5 h-5 text-brand-emerald"></i>
+            <span>Video 4K</span>
+          </button>
+        </div>
+
+        <!-- Floating Quick Search Bar -->
+        <div id="explore" class="glass-card text-left p-4 sm:p-6 rounded-3xl shadow-2xl border border-white/40 max-w-4xl mx-auto">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-ocean"></i> Destinasi / Negara
+              </label>
+              <select id="search-country" class="w-full bg-slate-100 hover:bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-cyan">
+                <option value="Semua">Semua Negara Eropa</option>
+                <option value="Islandia">Islandia (Iceland)</option>
+                <option value="Swiss">Swiss (Switzerland)</option>
+                <option value="Kroasia">Kroasia (Croatia)</option>
+                <option value="Norwegia">Norwegia (Norway)</option>
+                <option value="Austria">Austria</option>
+                <option value="Jerman">Jerman (Germany)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                <i data-lucide="footprints" class="w-3.5 h-3.5 text-brand-ocean"></i> Tingkat Akses
+              </label>
+              <select id="search-difficulty" class="w-full bg-slate-100 hover:bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-cyan">
+                <option value="Semua">Semua Jalur</option>
+                <option value="Mudah">Santai (Family-friendly)</option>
+                <option value="Sedang">Sedang (Moderate)</option>
+                <option value="Ekstrem">Tantangan Berat (Alpine)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                <i data-lucide="camera" class="w-3.5 h-3.5 text-brand-ocean"></i> Minat Utama
+              </label>
+              <select id="search-interest" class="w-full bg-slate-100 hover:bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-cyan">
+                <option value="Semua">Semua Pengalaman</option>
+                <option value="Fotografi">Spot Fotografi Lanskap</option>
+                <option value="Berenang">Lagoon / Bisa Berenang</option>
+                <option value="Tertinggi">Air Terjun Raksasa</option>
+                <option value="Hidden">Hidden Gems Terisolasi</option>
+              </select>
+            </div>
+
+            <div>
+              <button onclick="handleSearch()" class="w-full flex items-center justify-center gap-2 bg-brand-navy hover:bg-brand-ocean text-white font-bold py-3 px-4 rounded-xl shadow-md transition-all">
+                <i data-lucide="search" class="w-4 h-4 text-brand-cyan"></i>
+                <span>Temukan Rute</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200/80 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5 text-brand-emerald"></i>
+              <strong>Tren Populer:</strong> Lauterbrunnen (🇨🇭), Gullfoss (🇮🇸), Plitvice (🇭🇷), Krimml (🇦🇹).
+            </span>
+            <div class="flex items-center gap-3">
+              <button onclick="openRouteModal('staubbach')" class="text-xs font-bold text-brand-ocean hover:text-brand-cyan flex items-center gap-1 underline underline-offset-2">
+                <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                <span>Buka Peta Rute & Unduh GPX ↗</span>
+              </button>
+              <span class="text-slate-400 hidden sm:inline">• 1.250+ rute diverifikasi</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 2.5 INTERACTIVE EUROPE WATERFALL MAP SECTION              -->
+    <!-- ========================================================= -->
+    <section id="europe-map" class="py-20 bg-slate-900 text-white relative overflow-hidden border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 text-xs font-bold uppercase tracking-wider mb-2">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+              <span>PETA TOPOGRAFI LIVE EROPA</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Peta Navigasi Interaktif Benua Eropa
+            </h2>
+            <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+              Jelajahi sebaran air terjun terbaik langsung di atas peta satelit & topografi Eropa. Klik pin lokasi untuk melihat rute pendakian, elevasi aktual, dan mengunduh berkas GPX.
+            </p>
+          </div>
+
+          <!-- Quick Country Filters -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="flyToEuropeRegion('all')" class="map-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-cyan text-brand-dark transition-all">
+              🇪🇺 Semua
+            </button>
+            <button onclick="flyToEuropeRegion('swiss')" class="map-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+              🇨🇭 Swiss
+            </button>
+            <button onclick="flyToEuropeRegion('iceland')" class="map-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+              🇮🇸 Islandia
+            </button>
+            <button onclick="flyToEuropeRegion('croatia')" class="map-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+              🇭🇷 Kroasia
+            </button>
+            <button onclick="flyToEuropeRegion('austria')" class="map-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+              🇦🇹 Austria
+            </button>
+            <button onclick="flyToEuropeRegion('norway')" class="map-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+              🇳🇴 Norwegia
+            </button>
+          </div>
+        </div>
+
+        <!-- Leaflet Map Container -->
+        <div class="relative rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl bg-slate-950">
+          <div id="europe-overview-map" class="w-full h-[460px] sm:h-[520px] z-10"></div>
+          
+          <!-- Map Overlay Floating Guide Card -->
+          <div id="map-active-card" class="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-md z-20 bg-slate-900/95 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 shadow-2xl transition-all duration-300">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div>
+                <span id="map-card-badge" class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 uppercase mb-1">
+                  🇨🇭 Swiss • Alpen
+                </span>
+                <h4 id="map-card-title" class="text-base sm:text-lg font-bold text-white tracking-tight">
+                  Staubbach Falls & Lembah Lauterbrunnen
+                </h4>
+              </div>
+              <span id="map-card-elev" class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded-md shrink-0">
+                +125m
+              </span>
+            </div>
+
+            <p id="map-card-desc" class="text-xs text-slate-300 leading-relaxed mb-3">
+              Titisan air setinggi 297 meter yang membelah tebing granit Lauterbrunnen dengan rute gua terowongan batuan Staubbach Gallery.
+            </p>
+
+            <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400 font-semibold mb-3 pt-2 border-t border-slate-800">
+              <span id="map-card-dist"><i data-lucide="footprints" class="w-3.5 h-3.5 inline text-brand-cyan mr-1"></i> Jarak: 3.2 km</span>
+              <span id="map-card-time"><i data-lucide="clock" class="w-3.5 h-3.5 inline text-amber-400 mr-1"></i> Waktu: 55 Menit</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="map-card-btn-view" onclick="openRouteModal('staubbach')" class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-emerald text-brand-dark font-bold text-xs flex items-center justify-center gap-1.5 hover:brightness-110 transition-all shadow-md">
+                <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                <span>Lihat Jalur & Peta Langsung</span>
+              </button>
+              <button id="map-card-btn-gpx" onclick="downloadGPX('staubbach')" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1 border border-slate-700 transition-colors" title="Unduh GPX Langsung">
+                <i data-lucide="download" class="w-3.5 h-3.5 text-brand-cyan"></i>
+                <span class="hidden sm:inline">GPX</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Layer & Reset Map Buttons -->
+          <div class="absolute top-4 right-4 z-20 flex flex-col gap-2">
+            <button onclick="toggleMapLayer()" class="p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 shadow-lg text-xs font-bold flex items-center gap-1.5 transition-colors" title="Ganti Tampilan Peta (Standar / Topografi)">
+              <i data-lucide="layers" class="w-4 h-4 text-brand-cyan"></i>
+              <span class="hidden sm:inline" id="map-layer-label">Peta Topo</span>
+            </button>
+            <button onclick="resetEuropeMap()" class="p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 shadow-lg text-xs font-bold flex items-center gap-1.5 transition-colors" title="Reset Zoom Seluruh Eropa">
+              <i data-lucide="rotate-ccw" class="w-4 h-4 text-amber-400"></i>
+              <span class="hidden sm:inline">Reset</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 3. FILTER KATEGORI CEPAT (QUEST CATEGORIES)               -->
+    <!-- ========================================================= -->
+    <section id="categories" class="py-24 bg-white relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <p class="text-xs font-extrabold uppercase tracking-widest text-brand-ocean mb-2">PILIH GAYA PETUALANGANMU</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Temukan Rute Sesuai Ritme Langkahmu
+          </h2>
+          <p class="text-slate-600 text-base sm:text-lg">
+            Dari jalur setapak kayu ramah keluarga hingga ekspedisi ekstrem menembus jurang ngarai bebatuan Alpen dan fjord Skandinavia.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Kategori 1: Dettifoss (Iceland) - The most powerful waterfall in Europe -->
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 flex flex-col justify-end p-6 min-h-[380px]">
+            <img 
+              src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Dettifoss_TimBekaert.JPG/1920px-Dettifoss_TimBekaert.JPG" 
+              alt="Dettifoss, air terjun dengan debit terkuat di benua Eropa (Islandia)" 
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+            <div class="relative z-10 text-white">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-400 text-slate-950 mb-2">Menantang Gravitasi</span>
+              <h3 class="text-xl font-bold mb-2">Majestic Heights</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">Rasakan gempa getaran dari limpahan air terjun raksasa dengan ketinggian ratusan meter yang membelah tebing granit Eropa seperti Dettifoss dan Krimml.</p>
+              <button onclick="openRouteModal('krimml')" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-white group-hover:translate-x-1 transition-all">
+                <span>Lihat Peta Rute Krimml (380m)</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Kategori 2: Krka Waterfalls (Croatia) - Boardwalks & Family Friendly -->
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 flex flex-col justify-end p-6 min-h-[380px]">
+            <img 
+              src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Krkawatervallen.jpg/1920px-Krkawatervallen.jpg" 
+              alt="Jalur jembatan kayu ramah keluarga di Air Terjun Krka, Kroasia" 
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+            <div class="relative z-10 text-white">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-brand-emerald text-white mb-2">Indah Tanpa Hambatan</span>
+              <h3 class="text-xl font-bold mb-2">Easy Family Trails</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">Jalur setapak beraspal, jembatan kayu landai, dan fasilitas lengkap yang nyaman untuk balita hingga lansia di Krka dan Plitvice.</p>
+              <button onclick="openRouteModal('plitvice')" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-white group-hover:translate-x-1 transition-all">
+                <span>Jelajahi Jalur Santai & Peta</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Kategori 3: Goðafoss (Iceland) - Waterfall of the Gods -->
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 flex flex-col justify-end p-6 min-h-[380px]">
+            <img 
+              src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/1_Go%C3%B0afoss_aerial_pano_2017.jpg/1920px-1_Go%C3%B0afoss_aerial_pano_2017.jpg" 
+              alt="Pemandangan spektakuler Goðafoss, Air Terjun Para Dewa di Islandia" 
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+            <div class="relative z-10 text-white">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-brand-cyan text-slate-950 mb-2">Menangkap Cahaya</span>
+              <h3 class="text-xl font-bold mb-2">Photographer’s Paradise</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">Titik komposisi presisi, rute golden hour, dan sudut pandang bebas cipratan lensa untuk hasil jepretan kelas dunia di Islandia dan Alpen.</p>
+              <button onclick="openRouteModal('seljalandsfoss')" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-white group-hover:translate-x-1 transition-all">
+                <span>Temukan Sudut Estetik & GPX</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Kategori 4: Vøringsfossen (Norway) - Canyon Drop -->
+          <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 flex flex-col justify-end p-6 min-h-[380px]">
+            <img 
+              src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Voringsfossen_waterfall_at_Eidfjord%2C_Norway.jpg/1920px-Voringsfossen_waterfall_at_Eidfjord%2C_Norway.jpg" 
+              alt="Ngarai terjal dan air terjun liar Vøringsfossen di Norwegia" 
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+            <div class="relative z-10 text-white">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-rose-500 text-white mb-2">Hanya Sang Pemberani</span>
+              <h3 class="text-xl font-bold mb-2">Extreme Wilderness</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">Lintasan jembatan gantung ngarai Vøringsfossen dan trek menembus belantara tanpa sinyal seluler bagi penjelajah sejati.</p>
+              <button onclick="openRouteModal('voringsfossen')" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-white group-hover:translate-x-1 transition-all">
+                <span>Tantang Jalur Ekstrem</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 4. FEATURED CASCADES (AIR TERJUN UNGGULAN EROPA)          -->
+    <!-- ========================================================= -->
+    <section id="featured" class="py-24 bg-slate-100/70 border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-widest text-brand-emerald mb-2">KURASI KHUSUS BULAN INI</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              4 Mahakarya Air Terjun yang Wajib Dikunjungi
+            </h2>
+            <p class="text-slate-600 mt-2 max-w-2xl text-base">
+              Telah ditinjau dan divalidasi langsung oleh tim penjelajah lapangan serta komunitas pendaki gunung CascadaQuest.
+            </p>
+          </div>
+          <div>
+            <button onclick="openRouteModal('staubbach')" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-800 font-bold text-sm hover:bg-slate-50 shadow-sm transition-all">
+              <span>Buka Seluruh Rute Peta</span>
+              <i data-lucide="map" class="w-4 h-4 text-brand-cyan"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Card 1: Gullfoss (Iceland) -->
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col group">
+            <div class="relative h-56 overflow-hidden">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/1/18/Gullfoss_from_the_Air_%28cropped%29.jpg" 
+                alt="Air terjun Gullfoss (Golden Falls) di Islandia dari udara" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i> Mudah • Boardwalk
+              </span>
+              <button onclick="toggleFavorite(this)" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 hover:bg-white backdrop-blur-md flex items-center justify-center text-slate-700 hover:text-rose-500 transition-colors shadow-sm">
+                <i data-lucide="heart" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5 font-medium">
+                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> Islandia</span>
+                  <span class="flex items-center gap-1 text-amber-500 font-bold"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> 4.9 (1.840)</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-ocean transition-colors">Gullfoss (Golden Falls)</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">Lembah gletser raksasa tempat Sungai Hvítá terjun bebas ke dalam ngarai dramatis sedalam 32 meter berbalut kabut pelangi abadi.</p>
+              </div>
+              <div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-4">
+                  <span>Jarak: 1.8 km</span>
+                  <span>Waktu: 35 Menit</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="openVideoModal('iceland', 'Gullfoss Golden Falls (Islandia)')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-brand-cyan/15 hover:bg-brand-cyan text-brand-navy hover:text-white transition-all flex items-center justify-center gap-1.5 border border-brand-cyan/30">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                    <span>Video 4K</span>
+                  </button>
+                  <button onclick="openRouteModal('gullfoss')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-slate-900 hover:bg-brand-ocean text-white transition-colors flex items-center justify-center gap-1.5">
+                    <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                    <span>Peta & GPX</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Plitvice (Croatia) -->
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col group">
+            <div class="relative h-56 overflow-hidden">
+              <img 
+                src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/View_in_Plitvice_Lakes_National_Park.jpg/1920px-View_in_Plitvice_Lakes_National_Park.jpg" 
+                alt="Taman Nasional Danau Plitvice (Veliki Slap) di Kroasia" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                <i data-lucide="activity" class="w-3 h-3 text-amber-500"></i> Sedang • Boardwalk
+              </span>
+              <button onclick="toggleFavorite(this)" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 hover:bg-white backdrop-blur-md flex items-center justify-center text-slate-700 hover:text-rose-500 transition-colors shadow-sm">
+                <i data-lucide="heart" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5 font-medium">
+                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> Kroasia</span>
+                  <span class="flex items-center gap-1 text-amber-500 font-bold"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> 4.8 (2.410)</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-ocean transition-colors">Plitvice (Veliki Slap)</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">Air terjun tertinggi di Kroasia yang mengalir ke rangkaian 16 danau karst bertingkat dengan air hijau toska dan jembatan kayu terapung.</p>
+              </div>
+              <div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-4">
+                  <span>Jarak: 4.8 km</span>
+                  <span>Waktu: 2.5 Jam</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="openVideoModal('croatia', 'Plitvice Lakes National Park (Kroasia)')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-brand-cyan/15 hover:bg-brand-cyan text-brand-navy hover:text-white transition-all flex items-center justify-center gap-1.5 border border-brand-cyan/30">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                    <span>Video 4K</span>
+                  </button>
+                  <button onclick="openRouteModal('plitvice')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-slate-900 hover:bg-brand-ocean text-white transition-colors flex items-center justify-center gap-1.5">
+                    <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                    <span>Peta & GPX</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Staubbach Falls (Switzerland) -->
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col group">
+            <div class="relative h-56 overflow-hidden">
+              <img 
+                src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Lauterbrunnen_Staubbach.jpg/1920px-Lauterbrunnen_Staubbach.jpg" 
+                alt="Air terjun Staubbach Falls di lembah Lauterbrunnen, Alpen Swiss" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i> Mudah • Bertangga
+              </span>
+              <button onclick="toggleFavorite(this)" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 hover:bg-white backdrop-blur-md flex items-center justify-center text-slate-700 hover:text-rose-500 transition-colors shadow-sm">
+                <i data-lucide="heart" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5 font-medium">
+                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> Swiss</span>
+                  <span class="flex items-center gap-1 text-amber-500 font-bold"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> 4.9 (3.120)</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-ocean transition-colors">Staubbach Falls</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">Titisan air megah setinggi 297 meter yang jatuh anggun di belakang rumah kayu khas desa dongeng Alpen Swiss Lauterbrunnen.</p>
+              </div>
+              <div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-4">
+                  <span>Jarak: 3.2 km</span>
+                  <span>Waktu: 55 Menit</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="openVideoModal('swiss', 'Staubbach Falls & Lauterbrunnen (Swiss)')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-brand-cyan/15 hover:bg-brand-cyan text-brand-navy hover:text-white transition-all flex items-center justify-center gap-1.5 border border-brand-cyan/30">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                    <span>Video 4K</span>
+                  </button>
+                  <button onclick="openRouteModal('staubbach')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-slate-900 hover:bg-brand-ocean text-white transition-colors flex items-center justify-center gap-1.5">
+                    <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                    <span>Peta & GPX</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Seljalandsfoss (Iceland) -->
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col group">
+            <div class="relative h-56 overflow-hidden">
+              <img 
+                src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Idyllic_landscape_with_a_waterfall_%28Unsplash%29.jpg/1920px-Idyllic_landscape_with_a_waterfall_%28Unsplash%29.jpg" 
+                alt="Air terjun Seljalandsfoss dengan gua di belakang tirai air di Islandia" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                <i data-lucide="activity" class="w-3 h-3 text-amber-500"></i> Sedang • Licin
+              </span>
+              <button onclick="toggleFavorite(this)" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 hover:bg-white backdrop-blur-md flex items-center justify-center text-slate-700 hover:text-rose-500 transition-colors shadow-sm">
+                <i data-lucide="heart" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5 font-medium">
+                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> Islandia</span>
+                  <span class="flex items-center gap-1 text-amber-500 font-bold"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> 4.9 (2.950)</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-ocean transition-colors">Seljalandsfoss</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">Air terjun ajaib di mana Anda bisa berjalan masuk ke dalam ceruk gua tepat di balik tirai air deras yang bersumber dari gletser Eyjafjallajökull.</p>
+              </div>
+              <div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold mb-4">
+                  <span>Jarak: 1.6 km</span>
+                  <span>Waktu: 45 Menit</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="openVideoModal('iceland', 'Seljalandsfoss & Glacial Canyons (Islandia)')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-brand-cyan/15 hover:bg-brand-cyan text-brand-navy hover:text-white transition-all flex items-center justify-center gap-1.5 border border-brand-cyan/30">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                    <span>Video 4K</span>
+                  </button>
+                  <button onclick="openRouteModal('seljalandsfoss')" class="py-2.5 px-3 rounded-xl font-bold text-xs bg-slate-900 hover:bg-brand-ocean text-white transition-colors flex items-center justify-center gap-1.5">
+                    <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                    <span>Peta & GPX</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 5. KEY FEATURES / MENGAPA MENGGUNAKAN CASCADAQUEST        -->
+    <!-- ========================================================= -->
+    <section id="features" class="py-24 bg-white relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-20">
+          <p class="text-xs font-extrabold uppercase tracking-widest text-brand-cyan mb-2">NAVIGASI TANPA RAGU</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Dirancang oleh Petualang, Disempurnakan untuk Kepastian Perjalananmu
+          </h2>
+          <p class="text-slate-600 text-base sm:text-lg">
+            Akurasi rute yang bisa diandalkan bahkan saat sinyal seluler terputus di tengah hutan atau ngarai Eropa.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-cyan/40 hover:bg-white hover:shadow-xl transition-all duration-300">
+            <div class="w-14 h-14 rounded-2xl bg-brand-ocean/10 text-brand-ocean flex items-center justify-center mb-6">
+              <i data-lucide="map" class="w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Peta Rute Interaktif & Berkas GPX</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">Peta topografi beresolusi tinggi dengan garis kontur elevasi, titik parkir resmi, dan profil ketinggian. Unduh file GPX asli langsung ke jam tangan pintar Garmin, Suunto, atau aplikasi Strava.</p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-emerald/40 hover:bg-white hover:shadow-xl transition-all duration-300">
+            <div class="w-14 h-14 rounded-2xl bg-brand-emerald/10 text-brand-emerald flex items-center justify-center mb-6">
+              <i data-lucide="cloud-rain" class="w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Panduan Musim & Cuaca Real-Time</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">Laporan debit air aktual dari lelehan salju Alpen, status pembekuan es saat musim dingin Skandinavia, hingga peringatan jalur licin yang diperbarui berkala.</p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-cyan/40 hover:bg-white hover:shadow-xl transition-all duration-300">
+            <div class="w-14 h-14 rounded-2xl bg-brand-navy/10 text-brand-navy flex items-center justify-center mb-6">
+              <i data-lucide="shield-check" class="w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Komunitas & Tips Keselamatan</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">Catatan kondisi lapangan terkini dari sesama pendaki gunung Eropa. Rekomendasi perlengkapan teknis dan kontak darurat Alpine Rescue (1414) serta European Emergency (112).</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 6. SOCIAL PROOF & SUARA KOMUNITAS                         -->
+    <!-- ========================================================= -->
+    <section id="community" class="py-24 bg-slate-900 text-white relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <p class="text-xs font-extrabold uppercase tracking-widest text-brand-cyan mb-2">CERITA DARI JALUR SETAPAK</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">Lebih dari 45.000 Petualang Telah Memulai Jejak Mereka</h2>
+          <p class="text-slate-400 text-base sm:text-lg">Simak penuturan jujur mereka yang telah menemukan kedamaian di balik gemuruh air terjun Eropa.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-amber-400 mb-4">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <h4 class="font-bold text-white text-base mb-2">"Penyelamat mutlak saat menjelajahi Lauterbrunnen!"</h4>
+              <p class="text-slate-300 text-sm leading-relaxed italic mb-6">"CascadaQuest memberikan rute tersembunyi ke Trümmelbach dan Staubbach lengkap dengan info elevasi. Berkat peta offline dan file GPX yang bisa langsung diunduh, saya tidak tersesat saat sinyal hilang."</p>
+            </div>
+            <div class="flex items-center gap-4 pt-4 border-t border-slate-700">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="David" class="w-12 h-12 rounded-full object-cover border-2 border-brand-cyan">
+              <div>
+                <p class="text-sm font-bold text-white">David Miller</p>
+                <p class="text-xs text-slate-400">Trekking Enthusiast • London, UK</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-amber-400 mb-4">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <h4 class="font-bold text-white text-base mb-2">"Wajib hukumnya bagi fotografer lanskap."</h4>
+              <p class="text-slate-300 text-sm leading-relaxed italic mb-6">"Info posisi sudut matahari dan prediksi percikan kabut air di aplikasi ini gila akuratnya. Saya sukses mendapat bidikan aurora menakjubkan di atas Goðafoss Islandia!"</p>
+            </div>
+            <div class="flex items-center gap-4 pt-4 border-t border-slate-700">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Elena" class="w-12 h-12 rounded-full object-cover border-2 border-brand-emerald">
+              <div>
+                <p class="text-sm font-bold text-white">Elena Rostova</p>
+                <p class="text-xs text-slate-400">Travel Photographer • Berlin, Jerman</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-amber-400 mb-4">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <h4 class="font-bold text-white text-base mb-2">"Ekspedisi keluarga ke Plitvice sangat lancar!"</h4>
+              <p class="text-slate-300 text-sm leading-relaxed italic mb-6">"Peta rute interaktif dan filter 'Easy Family Trails' memudahkan saya memandu keluarga menyusuri boardwalk Danau Plitvice di Kroasia. Berkas GPX-nya langsung sinkron ke jam tangan Garmin saya!"</p>
+            </div>
+            <div class="flex items-center gap-4 pt-4 border-t border-slate-700">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Aris" class="w-12 h-12 rounded-full object-cover border-2 border-brand-cyan">
+              <div>
+                <p class="text-sm font-bold text-white">Aris Thorne</p>
+                <p class="text-xs text-slate-400">Alpine Trail Guide • Zurich, Swiss</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-slate-800 text-center">
+          <div>
+            <p class="text-3xl sm:text-4xl font-extrabold text-brand-cyan">1.250+</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Air Terjun Terpetakan</p>
+          </div>
+          <div>
+            <p class="text-3xl sm:text-4xl font-extrabold text-brand-emerald">45.000+</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Anggota Petualang</p>
+          </div>
+          <div>
+            <p class="text-3xl sm:text-4xl font-extrabold text-amber-400">98,4%</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Akurasi Kondisi Rute</p>
+          </div>
+          <div>
+            <p class="text-3xl sm:text-4xl font-extrabold text-white">28 Negara</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Cakupan Benua Eropa</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 7. LEAD MAGNET & NEWSLETTER CTA SECTION                  -->
+    <!-- ========================================================= -->
+    <section class="py-20 bg-slate-50 relative">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-br from-brand-navy via-slate-900 to-brand-dark rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden">
+          <div class="relative z-10 max-w-2xl">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 mb-4">
+              <i data-lucide="gift" class="w-3.5 h-3.5"></i> GRATIS & EKSKLUSIF
+            </span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4">
+              Dapatkan E-Book: "25 Air Terjun Tersembunyi Eropa yang Belum Dijamah Turis Masal"
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
+              Panduan digital 60 halaman berisi titik koordinat GPS rahasia, tips menghemat budget transportasi lokal Alpen & Skandinavia, dan panduan etika alam liar.
+            </p>
+
+            <form onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-3">
+              <input 
+                type="email" 
+                id="newsletter-email" 
+                placeholder="Ketik alamat email terbaikmu..." 
+                required 
+                class="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/20 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+              />
+              <button type="submit" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-cyan to-brand-emerald text-brand-dark font-bold text-sm hover:brightness-110 shadow-lg shadow-cyan-500/25 transition-all">
+                <span>Dapatkan Panduan Gratis</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 8. GLOBAL FOOTER                                         -->
+  <!-- ========================================================= -->
+  <footer class="bg-brand-dark text-slate-400 pt-16 pb-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
+        
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-emerald to-brand-cyan flex items-center justify-center">
+              <i data-lucide="waves" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold text-white tracking-tight">Cascada<span class="text-brand-cyan">Quest</span></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm mb-6">
+            Platform direktori dan navigasi rute air terjun nomor satu di Eropa. Didedikasikan untuk melestarikan keindahan alam liar dan mengedukasi etika Leave No Trace.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Destinasi Populer</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="javascript:void(0)" onclick="openRouteModal('gullfoss')" class="hover:text-brand-cyan">Air Terjun di Islandia</a></li>
+            <li><a href="javascript:void(0)" onclick="openRouteModal('staubbach')" class="hover:text-brand-cyan">Jalur Air Terjun Swiss</a></li>
+            <li><a href="javascript:void(0)" onclick="openRouteModal('plitvice')" class="hover:text-brand-cyan">Surga Alam Kroasia</a></li>
+            <li><a href="javascript:void(0)" onclick="openRouteModal('voringsfossen')" class="hover:text-brand-cyan">Ngarai Norwegia</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Fitur Eksplorasi</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#europe-map" class="hover:text-brand-cyan">Peta Topografi Live</a></li>
+            <li><a href="javascript:void(0)" onclick="openRouteModal('staubbach')" class="hover:text-brand-cyan">Unduh Berkas GPX Resmi</a></li>
+            <li><a href="#featured" class="hover:text-brand-cyan">Panduan Musim & Cuaca</a></li>
+            <li><a href="#community" class="hover:text-brand-cyan">Forum Petualang</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Perusahaan</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#" class="hover:text-brand-cyan">Tentang Kami</a></li>
+            <li><a href="#" class="hover:text-brand-cyan">Prinsip Leave No Trace</a></li>
+            <li><a href="#" class="hover:text-brand-cyan">Panduan Keselamatan</a></li>
+            <li><a href="#" class="hover:text-brand-cyan">FAQ & Bantuan</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026 CascadaQuest Europe. Seluruh Hak Cipta Dilindungi.</p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-slate-300">Kebijakan Privasi</a>
+          <a href="#" class="hover:text-slate-300">Syarat & Ketentuan</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- 9. MODAL DETAIL RUTE PREVIEW & DOWNLOAD GPX               -->
+  <!-- ========================================================= -->
+  <div id="route-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 transition-all duration-300">
+    <div class="bg-white rounded-3xl max-w-4xl w-full shadow-2xl relative flex flex-col max-h-[92vh] overflow-hidden border border-slate-200">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-slate-100 flex items-start justify-between bg-gradient-to-r from-slate-50 to-white">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i> Rute Terverifikasi
+            </span>
+            <span id="modal-badge-diff" class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-100 text-cyan-800">
+              Mudah
+            </span>
+            <span id="modal-badge-region" class="text-xs font-semibold text-slate-500">
+              🇨🇭 Swiss
+            </span>
+          </div>
+          <h3 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Staubbach Falls & Lembah Lauterbrunnen
+          </h3>
+          <p id="modal-location" class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
+            Bernese Oberland (Lauterbrunnen) • 46.5935° N, 7.9091° E
+          </p>
+        </div>
+
+        <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition-colors shrink-0" title="Tutup Modal (Esc)">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Quick Switcher Pills for European Waterfalls -->
+      <div class="px-5 sm:px-6 py-2.5 bg-slate-100/80 border-b border-slate-200 flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <span class="text-xs font-bold text-slate-500 shrink-0 mr-1 flex items-center gap-1">
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-brand-ocean"></i> Pilih Rute:
+        </span>
+        <button id="pill-staubbach" onclick="openRouteModal('staubbach')" class="route-pill px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-all bg-brand-navy text-white shadow-sm">
+          🇨🇭 Staubbach (Swiss)
+        </button>
+        <button id="pill-gullfoss" onclick="openRouteModal('gullfoss')" class="route-pill px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-all bg-white hover:bg-slate-200 text-slate-700 border border-slate-300">
+          🇮🇸 Gullfoss (Islandia)
+        </button>
+        <button id="pill-plitvice" onclick="openRouteModal('plitvice')" class="route-pill px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-all bg-white hover:bg-slate-200 text-slate-700 border border-slate-300">
+          🇭🇷 Plitvice (Kroasia)
+        </button>
+        <button id="pill-seljalandsfoss" onclick="openRouteModal('seljalandsfoss')" class="route-pill px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-all bg-white hover:bg-slate-200 text-slate-700 border border-slate-300">
+          🇮🇸 Seljalandsfoss (Islandia)
+        </button>
+        <button id="pill-krimml" onclick="openRouteModal('krimml')" class="route-pill px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-all bg-white hover:bg-slate-200 text-slate-700 border border-slate-300">
+          🇦🇹 Krimml (Austria)
+        </button>
+        <button id="pill-voringsfossen" onclick="openRouteModal('voringsfossen')" class="route-pill px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-all bg-white hover:bg-slate-200 text-slate-700 border border-slate-300">
+          🇳🇴 Vøringsfossen (Norwegia)
+        </button>
+      </div>
+
+      <!-- Navigation Tabs Inside Modal -->
+      <div class="px-5 sm:px-6 pt-3 border-b border-slate-200 flex items-center gap-6 bg-white">
+        <button id="tab-btn-map" onclick="switchRouteTab('map')" class="modal-tab-btn pb-3 text-sm font-bold text-brand-ocean border-b-2 border-brand-ocean flex items-center gap-2">
+          <i data-lucide="map" class="w-4 h-4"></i>
+          <span>Peta Interaktif Langsung</span>
+        </button>
+        <button id="tab-btn-elevation" onclick="switchRouteTab('elevation')" class="modal-tab-btn pb-3 text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center gap-2">
+          <i data-lucide="trending-up" class="w-4 h-4"></i>
+          <span>Profil Ketinggian & Checkpoint</span>
+        </button>
+        <button id="tab-btn-download" onclick="switchRouteTab('download')" class="modal-tab-btn pb-3 text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Unduh GPX & Navigasi</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-5">
+        
+        <!-- ================= TAB 1: PETA INTERAKTIF LANGSUNG ================= -->
+        <div id="tab-content-map" class="space-y-4">
+          <!-- Leaflet Live Route Map -->
+          <div class="relative rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
+            <div id="modal-leaflet-map" class="w-full h-72 sm:h-96 z-10"></div>
+            
+            <!-- Map Mini Controls -->
+            <div class="absolute top-3 right-3 z-20 flex flex-col gap-2">
+              <button onclick="toggleModalMapLayer()" class="px-3 py-1.5 rounded-lg bg-white/95 text-slate-800 shadow text-xs font-bold border border-slate-200 hover:bg-slate-50 flex items-center gap-1.5 transition-colors">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-brand-ocean"></i>
+                <span id="modal-layer-label">Ganti Layer Topo</span>
+              </button>
+              <button onclick="fitRouteModalBounds()" class="px-3 py-1.5 rounded-lg bg-white/95 text-slate-800 shadow text-xs font-bold border border-slate-200 hover:bg-slate-50 flex items-center gap-1.5 transition-colors">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>Fit Rute</span>
+              </button>
+            </div>
+
+            <!-- Legend Badge -->
+            <div class="absolute bottom-3 left-3 z-20 bg-slate-900/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-[11px] font-semibold flex items-center gap-3 shadow-lg">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Start / Parkir</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> Air Terjun</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Viewpoint</span>
+            </div>
+          </div>
+
+          <!-- Key Metrics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+              <span class="text-[11px] font-semibold text-slate-400 block mb-0.5">Jarak Total</span>
+              <span id="stat-distance" class="text-base sm:text-lg font-bold text-slate-800">3.2 km</span>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+              <span class="text-[11px] font-semibold text-slate-400 block mb-0.5">Elevasi (Naik / Turun)</span>
+              <span id="stat-elevation" class="text-base sm:text-lg font-bold text-emerald-600">+125 m</span>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+              <span class="text-[11px] font-semibold text-slate-400 block mb-0.5">Estimasi Waktu</span>
+              <span id="stat-duration" class="text-base sm:text-lg font-bold text-slate-800">55 Menit</span>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+              <span class="text-[11px] font-semibold text-slate-400 block mb-0.5">Kondisi Debit Air</span>
+              <span id="stat-flow" class="text-base sm:text-lg font-bold text-brand-ocean">Deras (Optimal)</span>
+            </div>
+          </div>
+
+          <p id="modal-description" class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80">
+            Rute ikonik menyusuri lembah 72 air terjun Lauterbrunnen menuju tirai air Staubbach setinggi 297 meter, dilengkapi terowongan batu buatan abad ke-19 (Staubbach Gallery) tepat di balik tirai semburan air.
+          </p>
+        </div>
+
+        <!-- ================= TAB 2: PROFIL KETINGGIAN & CHECKPOINT ================= -->
+        <div id="tab-content-elevation" class="space-y-5 hidden">
+          <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="mountain" class="w-4 h-4 text-brand-ocean"></i>
+                <span>Grafik Profil Elevasi (mdpl vs Jarak km)</span>
+              </h4>
+              <span id="elev-range-label" class="text-xs font-semibold text-slate-500">795 mdpl — 920 mdpl</span>
+            </div>
+
+            <!-- Dynamic SVG Elevation Graph -->
+            <div class="w-full h-44 sm:h-52 bg-white rounded-xl p-2 border border-slate-200 relative">
+              <svg id="elevation-svg" class="w-full h-full overflow-visible" viewBox="0 0 500 160" preserveAspectRatio="none">
+                <!-- SVG content injected via JS -->
+              </svg>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-400 font-semibold mt-2 px-1">
+              <span>Titik Awal (0.0 km)</span>
+              <span>Titik Puncak Air Terjun</span>
+              <span>Titik Selesai Rute</span>
+            </div>
+          </div>
+
+          <!-- Waypoints & Checkpoints List -->
+          <div>
+            <h4 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+              <i data-lucide="milestone" class="w-4 h-4 text-emerald-600"></i>
+              <span>Titik Pos & Checkpoint Rute</span>
+            </h4>
+            <div id="waypoints-container" class="space-y-2.5">
+              <!-- Waypoints injected via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB 3: UNDUH GPX & NAVIGASI ================= -->
+        <div id="tab-content-download" class="space-y-5 hidden">
+          <div class="bg-gradient-to-br from-brand-navy to-slate-900 text-white p-6 rounded-3xl shadow-lg relative overflow-hidden">
+            <div class="relative z-10 max-w-xl">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 mb-3 uppercase">
+                <i data-lucide="satellite" class="w-3.5 h-3.5"></i> Standar GPS 1.1 Resmi
+              </span>
+              <h4 class="text-xl sm:text-2xl font-bold tracking-tight mb-2">
+                Unduh Berkas GPX Langsung (.gpx)
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+                Berkas rute berformat XML GPX 1.1 standar internasional berisi waypoint titik koordinat, garis polyline trek pendakian, dan data kontur elevasi. Dapat langsung diimpor ke:
+              </p>
+
+              <div class="flex flex-wrap items-center gap-2 mb-6 text-xs text-slate-300">
+                <span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 font-semibold">Garmin Connect</span>
+                <span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 font-semibold">Strava</span>
+                <span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 font-semibold">Komoot</span>
+                <span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 font-semibold">AllTrails</span>
+                <span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 font-semibold">Suunto</span>
+                <span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 font-semibold">OsmAnd (Offline)</span>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-center gap-3">
+                <button id="btn-download-gpx-tab" onclick="downloadCurrentGPX()" class="w-full sm:w-auto px-6 py-3.5 rounded-full font-bold text-sm text-brand-dark bg-gradient-to-r from-brand-cyan to-brand-emerald hover:brightness-110 shadow-lg shadow-cyan-500/25 transition-all flex items-center justify-center gap-2">
+                  <i data-lucide="download" class="w-4 h-4"></i>
+                  <span>Unduh File GPX Sekarang</span>
+                </button>
+                <button onclick="copyGPSCoordinates()" class="w-full sm:w-auto px-5 py-3.5 rounded-full font-semibold text-sm text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-colors flex items-center justify-center gap-2">
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                  <span>Salin Koordinat GPS</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Secondary Navigation Options -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a id="btn-open-google-maps" href="#" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-brand-ocean hover:shadow-md transition-all flex items-center gap-3 group">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <i data-lucide="navigation" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h5 class="text-sm font-bold text-slate-900">Buka di Google Maps Langsung</h5>
+                <p class="text-xs text-slate-500 mt-0.5">Mulai navigasi petunjuk arah jalan kaki ke titik awal parkir.</p>
+              </div>
+            </a>
+
+            <button onclick="printRouteBrief()" class="p-4 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-brand-emerald hover:shadow-md transition-all flex items-center gap-3 text-left group">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <i data-lucide="printer" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h5 class="text-sm font-bold text-slate-900">Cetak / Simpan Lembar Peta PDF</h5>
+                <p class="text-xs text-slate-500 mt-0.5">Cetak ringkasan panduan rute offline untuk dibawa ke lapangan.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Action Bar -->
+      <div class="p-4 sm:p-5 border-t border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="text-xs text-slate-500 hidden sm:flex items-center gap-1.5">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+          <span>Data rute diverifikasi dengan sensor barometer GPS lapangan.</span>
+        </div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button onclick="closeModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs transition-colors">
+            Tutup
+          </button>
+          <button id="btn-modal-quick-gpx" onclick="downloadCurrentGPX()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-emerald text-brand-dark font-bold text-xs flex items-center justify-center gap-2 hover:brightness-110 shadow transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Unduh Berkas GPX</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 10. MODAL VIDEO PREVIEW (4K UHD)                          -->
+  <!-- ========================================================= -->
+  <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 transition-all duration-300">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[92vh]">
+      
+      <!-- Video Header -->
+      <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/70">
+        <div class="flex items-center gap-3">
+          <span class="flex h-3 w-3 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+          </span>
+          <div>
+            <h3 id="video-modal-title" class="text-sm sm:text-base font-bold text-white tracking-tight">Preview Dokumentasi Air Terjun 4K</h3>
+            <p class="text-[11px] text-slate-400">CascadaQuest Expeditions • Ultra HD Drone Footage</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="hidden sm:inline-block px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 tracking-widest uppercase">
+            4K UHD
+          </span>
+          <button onclick="closeVideoModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-rose-500 text-slate-300 hover:text-white flex items-center justify-center transition-colors" title="Tutup Video (Esc)">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Player Container (Native HTML5 Video) -->
+      <div class="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden group">
+        <video 
+          id="native-video-player" 
+          class="w-full h-full object-cover" 
+          controls 
+          autoplay 
+          loop 
+          playsinline
+          poster="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/1_lauterbrunnen_valley_wengen_2022.jpg/1920px-1_lauterbrunnen_valley_wengen_2022.jpg"
+        >
+          <source id="video-source" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Abfluss_des_Breithorngletschers.webm" type="video/webm">
+          Browser Anda tidak mendukung pemutar video HTML5.
+        </video>
+
+        <!-- Direct YouTube Fallback Button -->
+        <a 
+          id="youtube-direct-link" 
+          href="https://www.youtube.com/watch?v=6RFYXdVVjUQ" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="absolute top-4 right-4 z-20 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-xl backdrop-blur-sm transition-all hover:scale-105"
+        >
+          <i data-lucide="youtube" class="w-4 h-4"></i>
+          <span>Buka di YouTube ↗</span>
+        </a>
+      </div>
+
+      <!-- Playlist / Chapter Selector Bar -->
+      <div class="p-4 sm:p-5 bg-slate-950 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+          <span class="text-xs font-bold text-slate-400 shrink-0 mr-1 flex items-center gap-1">
+            <i data-lucide="film" class="w-3.5 h-3.5 text-brand-cyan"></i> Pilihan Rute:
+          </span>
+          <button id="btn-chapter-swiss" onclick="switchVideo('swiss')" class="chapter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40 shrink-0 transition-colors">
+            🇨🇭 Swiss (Alpen)
+          </button>
+          <button id="btn-chapter-iceland" onclick="switchVideo('iceland')" class="chapter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white shrink-0 border border-slate-700 transition-colors">
+            🇮🇸 Islandia (Gletser)
+          </button>
+          <button id="btn-chapter-croatia" onclick="switchVideo('croatia')" class="chapter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white shrink-0 border border-slate-700 transition-colors">
+            🇭🇷 Kroasia (Danau Karst)
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+          <button onclick="openRouteFromVideo()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-emerald text-brand-dark font-bold text-xs flex items-center justify-center gap-2 hover:brightness-110 shadow-md transition-all">
+            <i data-lucide="map" class="w-3.5 h-3.5"></i>
+            <span>Buka Rute & Peta GPX</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs sm:text-sm font-semibold px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <i data-lucide="info" class="w-4 h-4 text-brand-cyan"></i>
+    <span id="toast-text">Pesan notifikasi</span>
+  </div>
+
+  <!-- SCRIPT LOGIC & DATABASE is loaded from script.js in the head. -->
+
+</body>
+</html>

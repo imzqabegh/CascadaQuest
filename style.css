@@ -1,0 +1,46 @@
+.glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .glass-nav {
+      background: rgba(15, 44, 89, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    /* Leaflet Custom Marker & Glow Line */
+    .custom-marker-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease;
+    }
+    .custom-marker-pin:hover {
+      transform: scale(1.15);
+    }
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 9999px;
+      animation: pin-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pin-pulse {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      70% { transform: scale(2.2); opacity: 0; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    /* Hide scrollbar for tabs */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Leaflet tile smooth filter */
+    .leaflet-tile-pane {
+      filter: saturate(1.05) contrast(1.02);
+    }
